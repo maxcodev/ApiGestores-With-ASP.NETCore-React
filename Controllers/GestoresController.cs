@@ -15,13 +15,18 @@ namespace ApiGestores.Controllers
     public class GestoresController : Controller
     {
         private readonly AppDbContext context;
+
+        public GestoresController(AppDbContext context)
+        {
+            this.context = context;
+        }
         // GET: api/<GestoresController>
         [HttpGet]
         public ActionResult Get()
         {
             try
             {
-                return Ok(context.GestoresDB.ToList());
+                return Ok(context.GestoresDb.ToList());
             }catch(Exception ex)
             {
                 return BadRequest(ex.Message);
@@ -34,7 +39,7 @@ namespace ApiGestores.Controllers
         {
             try
             {
-                var gestor = context.GestoresDB.FirstOrDefault(g=>g.id == id);
+                var gestor = context.GestoresDb.FirstOrDefault(g=>g.Id == id);
             }catch(Exception ex)
             {
                 return BadRequest(ex.Message);
@@ -44,13 +49,13 @@ namespace ApiGestores.Controllers
 
         // POST api/<GestoresController>
         [HttpPost]
-        public ActionResult Post([FromBody]GestoresBD gestor)
+        public ActionResult Post([FromBody]GestoresBd gestor)
         {
             try
             {
-                context.GestoresDB.Add(gestor); // Insertamos el registro dentro de la BDD, el cual es el que nos pasaron como parametro "gestor"
+                context.GestoresDb.Add(gestor); // Insertamos el registro dentro de la BDD, el cual es el que nos pasaron como parametro "gestor"
                 context.SaveChanges();  //Guardamos los cambios
-                return CreatedAtRoute("GetGestor", new {id= gestor.id}, gestor); //Retornamos al usuario lo que se insertól, incluyendo el id autoincrementable que se generó
+                return CreatedAtRoute("GetGestor", new {id= gestor.Id}, gestor); //Retornamos al usuario lo que se insertól, incluyendo el id autoincrementable que se generó
                 //Utilizamos "GetGestor" que es el "Get id" lo reciba el metodo Get
             }
             catch(Exception ex)
@@ -61,15 +66,15 @@ namespace ApiGestores.Controllers
 
         // PUT api/<GestoresController>/5
         [HttpPut("{id}")]
-        public ActionResult Put(int id, [FromBody] GestoresBD gestor)
+        public ActionResult Put(int id, [FromBody] GestoresBd gestor)
         {
             try
             {
-                if(gestor.id == id)
+                if(gestor.Id == id)
                 {
                     context.Entry(gestor).State = EntityState.Modified; 
                     context.SaveChanges();  //Guardamos los cambios
-                    return CreatedAtRoute("GetGestor", new { id = gestor.id }, gestor);
+                    return CreatedAtRoute("GetGestor", new { id = gestor.Id }, gestor);
                 }
                 else
                 {
@@ -88,10 +93,10 @@ namespace ApiGestores.Controllers
         {
             try
             {
-                var gestor=context.GestoresDB.FirstOrDefault(g => g.id == id);
+                var gestor=context.GestoresDb.FirstOrDefault(g => g.Id == id);
                 if (gestor != null)
                 {
-                    context.GestoresDB.Remove(gestor);
+                    context.GestoresDb.Remove(gestor);
                     context.SaveChanges();
                     return Ok(id);
                 }

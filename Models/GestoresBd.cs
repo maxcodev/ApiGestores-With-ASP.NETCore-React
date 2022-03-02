@@ -2,10 +2,10 @@ using System.ComponentModel.DataAnnotations;
 
 namespace ApiGestores.Models
 {
-    public class GestoresBD
+    public class GestoresBd
     {
         [Key]
-        public int id  { get; set; }
+        public int Id  { get; set; }
         [StringLength(50)] 
         [Required(ErrorMessage = "El Nombre es requerido")]
         public string Nombre { get; set; }

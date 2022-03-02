@@ -10,6 +10,6 @@ namespace ApiGestores.Context
                 
         }
 
-        public DbSet<GestoresBD> GestoresDB { get; set; }
+        public DbSet<GestoresBd> GestoresDb { get; set; }
     }
 }
